@@ -26,14 +26,12 @@ final class SongsViewModel {
     }
 
     // MARK: - Lifecycle
-
     func onAppear() async {
         guard case .recentlyPlayed = mode, items.isEmpty else { return }
         await loadRecentlyPlayed()
     }
 
     // MARK: - Triggers
-
     private func onSearchTextChanged() {
         searchTask?.cancel()
 
@@ -72,7 +70,6 @@ final class SongsViewModel {
     }
 
     // MARK: - Recently played
-
     private func loadRecentlyPlayed() async {
         state = .loading
         do {
@@ -89,7 +86,6 @@ final class SongsViewModel {
     }
 
     // MARK: - Search
-
     private func performSearch(query: String, reset: Bool) async {
         state = .loading
         let offset = reset ? 0 : items.count

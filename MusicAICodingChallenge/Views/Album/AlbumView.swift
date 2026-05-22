@@ -48,7 +48,6 @@ struct AlbumView: View {
     }
 
     // MARK: - Album Hero
-
     private var albumHero: some View {
         VStack(spacing: DS.Spacing.md) {
             let firstTrack = viewModel.tracks.first
@@ -82,7 +81,6 @@ struct AlbumView: View {
     }
 
     // MARK: - Track List
-
     private var trackList: some View {
         LazyVStack(spacing: 0) {
             ForEach(viewModel.tracks) { track in

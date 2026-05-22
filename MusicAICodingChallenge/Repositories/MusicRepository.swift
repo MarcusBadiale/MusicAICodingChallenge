@@ -40,7 +40,6 @@ final class MusicRepository: MusicRepositoryProtocol {
 }
 
 // MARK: - DTO → Domain mapping
-
 private extension MusicItemDTO {
     func toModel() -> MusicItem {
         MusicItem(

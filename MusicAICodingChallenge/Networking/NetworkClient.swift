@@ -17,7 +17,6 @@ nonisolated final class NetworkClient: NetworkClientProtocol {
     }
 
     // MARK: - Pipeline steps
-
     private func sendRequest(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         do {
             return try await transport.send(request)

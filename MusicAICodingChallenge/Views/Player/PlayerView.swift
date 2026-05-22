@@ -56,7 +56,6 @@ struct PlayerView: View {
     }
 
     // MARK: - Artwork
-
     private var artwork: some View {
         AsyncImage(url: viewModel.currentItem?.artworkUrl) { image in
             image
@@ -71,7 +70,6 @@ struct PlayerView: View {
     }
 
     // MARK: - Track Info
-
     private var trackInfo: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: DS.Spacing.xs) {
@@ -104,7 +102,6 @@ struct PlayerView: View {
     }
 
     // MARK: - Progress
-
     private var progressSection: some View {
         VStack(spacing: DS.Spacing.xs) {
             Slider(
@@ -137,7 +134,6 @@ struct PlayerView: View {
     }
 
     // MARK: - Transport Controls
-
     private var transportControls: some View {
         HStack(spacing: DS.Spacing.huge) {
             Button {

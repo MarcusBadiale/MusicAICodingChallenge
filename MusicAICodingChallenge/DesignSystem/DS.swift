@@ -2,7 +2,6 @@ import SwiftUI
 
 enum DS {
     // MARK: - Spacing
-
     enum Spacing {
         static let xxs: CGFloat = 2
         static let xs: CGFloat = 4
@@ -16,7 +15,6 @@ enum DS {
     }
 
     // MARK: - Corner Radius
-
     enum Radius {
         static let sm: CGFloat = 8
         static let md: CGFloat = 14
@@ -24,7 +22,6 @@ enum DS {
     }
 
     // MARK: - Component Sizes
-
     enum Size {
         static let tapTarget: CGFloat = 44
         static let thumbnail: CGFloat = 56
@@ -33,7 +30,6 @@ enum DS {
     }
 
     // MARK: - Icon Sizes
-
     enum IconSize {
         static let sm: CGFloat = 18
         static let md: CGFloat = 22
@@ -41,7 +37,6 @@ enum DS {
     }
 
     // MARK: - Sheet
-
     enum Sheet {
         static let optionsHeight: CGFloat = 180
     }

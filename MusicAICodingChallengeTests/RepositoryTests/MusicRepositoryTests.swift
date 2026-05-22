@@ -6,7 +6,6 @@ import SwiftData
 struct MusicRepositoryTests {
 
     // MARK: - Helpers
-
     private func makeStore() throws -> MusicModelActor {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: CachedSong.self, configurations: config)
@@ -21,7 +20,6 @@ struct MusicRepositoryTests {
     }
 
     // MARK: - getRecentlyPlayed
-
     @Test func recentlyPlayedReturnsEmptyWhenNothingPlayed() async throws {
         let store = try makeStore()
         let repo = makeRepository(store: store)
@@ -74,7 +72,6 @@ struct MusicRepositoryTests {
     }
 
     // MARK: - recordPlay
-
     @Test func recordPlayInsertsNewSong() async throws {
         let store = try makeStore()
         let repo = makeRepository(store: store)
@@ -120,7 +117,6 @@ struct MusicRepositoryTests {
     }
 
     // MARK: - getAlbum (API-first, cache fallback)
-
     @Test func getAlbumReturnsEmptyWhenAPIReturnsEmpty() async throws {
         let service = MockMusicService()
         service.getAlbumHandler = { _ in [] }
@@ -201,7 +197,6 @@ struct MusicRepositoryTests {
     }
 
     // MARK: - search (passthrough with mapping)
-
     @Test func searchDelegatesToService() async throws {
         let service = MockMusicService()
         let dtoResult = SearchResultDTO(

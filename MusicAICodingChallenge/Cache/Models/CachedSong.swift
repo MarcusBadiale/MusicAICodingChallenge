@@ -17,10 +17,11 @@ final class CachedSong {
     var trackNumber: Int?
     var discNumber: Int?
 
-    // MARK: -
+    // MARK: - Playback Tracking
     var playedAt: Date?
     var playCount: Int = 0
 
+    // MARK: Inits
     init(
         trackId: Int,
         trackName: String,
@@ -72,6 +73,7 @@ final class CachedSong {
         )
     }
 
+    // MARK: - Mapping
     func toModel() -> MusicItem {
         MusicItem(
             id: trackId,

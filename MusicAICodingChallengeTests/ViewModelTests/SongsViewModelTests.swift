@@ -6,7 +6,6 @@ import Foundation
 struct SongsViewModelTests {
 
     // MARK: - Helpers
-
     private func makeViewModel(
         repository: MockMusicRepository = MockMusicRepository()
     ) -> (SongsViewModel, MockMusicRepository) {
@@ -15,7 +14,6 @@ struct SongsViewModelTests {
     }
 
     // MARK: - Recently Played mode
-
     @Test func onAppearLoadsRecentlyPlayed() async {
         let repo = MockMusicRepository()
         repo.recentlyPlayedHandler = { _ in
@@ -52,7 +50,6 @@ struct SongsViewModelTests {
     }
 
     // MARK: - Mode transitions
-
     @Test func initialModeIsRecentlyPlayed() {
         let (vm, _) = makeViewModel()
         #expect(vm.mode == .recentlyPlayed)
@@ -69,7 +66,6 @@ struct SongsViewModelTests {
     }
 
     // MARK: - Error handling
-
     @Test func recentlyPlayedErrorSetsErrorState() async {
         let repo = MockMusicRepository()
         repo.recentlyPlayedHandler = { _ in throw MusicError.serverError }

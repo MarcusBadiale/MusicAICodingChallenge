@@ -3,9 +3,7 @@ import SwiftData
 
 @ModelActor
 actor MusicModelActor {
-
     // MARK: - Reads
-
     func fetchRecentlyPlayed(limit: Int) throws -> [MusicItem] {
         var descriptor = FetchDescriptor<CachedSong>(
             predicate: #Predicate { $0.playedAt != nil },
@@ -27,7 +25,6 @@ actor MusicModelActor {
     }
 
     // MARK: - Writes
-
     func recordPlay(item: MusicItem) throws {
         let trackId = item.id
         let existing = try modelContext.fetch(
