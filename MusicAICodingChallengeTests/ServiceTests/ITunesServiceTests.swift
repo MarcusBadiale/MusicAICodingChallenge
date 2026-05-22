@@ -5,7 +5,6 @@ import Foundation
 struct ITunesServiceTests {
 
     // MARK: - Helpers
-
     private func makeService(transport: HTTPTransport) -> ITunesService {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
@@ -13,7 +12,6 @@ struct ITunesServiceTests {
     }
 
     // MARK: - Search happy path
-
     @Test func searchReturnsValidResults() async throws {
         let transport = StubHTTPTransport.returning(stub: .searchAdele)
         let service = makeService(transport: transport)
@@ -58,7 +56,6 @@ struct ITunesServiceTests {
     }
 
     // MARK: - Artwork upscaling
-
     @Test func artworkURLUpscaledTo600() async throws {
         let transport = StubHTTPTransport.returning(stub: .searchArtwork100)
         let service = makeService(transport: transport)
@@ -71,7 +68,6 @@ struct ITunesServiceTests {
     }
 
     // MARK: - Minimal fields / optional handling
-
     @Test func minimalFieldsProducesValidDTO() async throws {
         let transport = StubHTTPTransport.returning(stub: .searchMinimalFields)
         let service = makeService(transport: transport)
@@ -91,7 +87,6 @@ struct ITunesServiceTests {
     }
 
     // MARK: - Edge cases (inline JSON)
-
     @Test func skipsTracksWithMissingRequiredFields() async throws {
         let json = """
         {
@@ -115,7 +110,6 @@ struct ITunesServiceTests {
     }
 
     // MARK: - Error mapping
-
     @Test func offlineErrorMapsToOffline() async {
         let transport = StubHTTPTransport.failing(with: URLError(.notConnectedToInternet))
         let service = makeService(transport: transport)
@@ -144,7 +138,6 @@ struct ITunesServiceTests {
     }
 
     // MARK: - Album lookup
-
     @Test func getAlbumFiltersCollectionEntries() async throws {
         let transport = StubHTTPTransport.returning(stub: .albumLookup)
         let service = makeService(transport: transport)

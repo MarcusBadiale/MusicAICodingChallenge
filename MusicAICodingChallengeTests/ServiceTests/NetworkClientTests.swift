@@ -13,7 +13,6 @@ struct NetworkClientTests {
     }
 
     // MARK: - Success
-
     @Test func successfulRequestDecodesResponse() async throws {
         let json = #"{"value": 42}"#
         let transport = StubHTTPTransport.returning(Data(json.utf8))
@@ -26,7 +25,6 @@ struct NetworkClientTests {
     }
 
     // MARK: - Offline error mapping
-
     @Test func notConnectedToInternetMapsToOffline() async {
         let transport = StubHTTPTransport.failing(with: URLError(.notConnectedToInternet))
         let client = NetworkClient(transport: transport)
@@ -55,7 +53,6 @@ struct NetworkClientTests {
     }
 
     // MARK: - Server error mapping
-
     @Test func http500MapsToServerError() async {
         let transport = StubHTTPTransport.returning(Data(), status: 500)
         let client = NetworkClient(transport: transport)
@@ -93,7 +90,6 @@ struct NetworkClientTests {
     }
 
     // MARK: - Decoding errors
-
     @Test func invalidJSONMapsToDecodingFailed() async {
         let transport = StubHTTPTransport.returning(Data("not json".utf8))
         let client = NetworkClient(transport: transport)
@@ -115,7 +111,6 @@ struct NetworkClientTests {
     }
 
     // MARK: - Cancellation
-
     @Test func canceledRequestPropagatesCancellation() async {
         let transport = StubHTTPTransport.failing(with: CancellationError())
         let client = NetworkClient(transport: transport)
@@ -126,7 +121,6 @@ struct NetworkClientTests {
     }
 
     // MARK: - Request capture
-
     @Test func requestIsSentToTransport() async throws {
         let json = #"{"value": 1}"#
         let transport = StubHTTPTransport.returning(Data(json.utf8))

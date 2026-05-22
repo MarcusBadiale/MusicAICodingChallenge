@@ -1,10 +1,37 @@
 import SwiftUI
+import SwiftData
 
 @main
 struct MusicAICodingChallengeApp: App {
+    let container: ModelContainer
+    let repository: MusicRepositoryProtocol
+
+    init() {
+        let container = try! ModelContainer(for: CachedSong.self)
+        let store = MusicModelActor(modelContainer: container)
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 30
+        sessionConfig.waitsForConnectivity = false
+        let session = URLSession(configuration: sessionConfig)
+
+        let networkClient: NetworkClientProtocol = NetworkClient(
+            transport: session,
+            decoder: decoder
+        )
+
+        let service: MusicServiceProtocol = ITunesService(client: networkClient)
+
+        self.container = container
+        self.repository = MusicRepository(service: service, store: store)
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(repository: repository)
         }
     }
 }
