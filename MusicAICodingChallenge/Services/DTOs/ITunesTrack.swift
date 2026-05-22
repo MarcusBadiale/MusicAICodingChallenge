@@ -13,6 +13,8 @@ nonisolated struct ITunesTrack: Decodable, Sendable {
     let trackTimeMillis: Int?
     let releaseDate: Date?
     let primaryGenreName: String?
+    let trackNumber: Int?
+    let discNumber: Int?
 
     func toDTO() -> MusicItemDTO? {
         guard let trackId, let trackName, let artistName else { return nil }
@@ -31,7 +33,9 @@ nonisolated struct ITunesTrack: Decodable, Sendable {
             trackTimeMillis: trackTimeMillis,
             genre: primaryGenreName,
             releaseDate: releaseDate,
-            collectionId: collectionId
+            collectionId: collectionId,
+            trackNumber: trackNumber,
+            discNumber: discNumber
         )
     }
 }
