@@ -4,7 +4,6 @@ import Foundation
 
 @MainActor
 struct SongsViewModelTests {
-
     // MARK: - Helpers
     private func makeViewModel(
         repository: MockMusicRepository = MockMusicRepository()

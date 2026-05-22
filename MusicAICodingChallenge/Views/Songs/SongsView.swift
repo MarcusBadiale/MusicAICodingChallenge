@@ -6,72 +6,71 @@ struct SongsView: View {
 
     @State private var sheetItem: MusicItem?
     @State private var isSearchCollapsed = false
+    @State private var isSearchPresented = false
+    @State private var scrollProxy: ScrollViewProxy?
 
     init(repository: MusicRepositoryProtocol) {
         _viewModel = State(initialValue: SongsViewModel(repository: repository))
     }
 
     var body: some View {
-        List {
-            ForEach(Array(viewModel.items.enumerated()), id: \.offset) { index, item in
-                SongRow(item: item) {
-                    sheetItem = item
-                }
-                .onTapGesture {
-                    navigator.navigateToPlayer(item: item, queue: viewModel.items)
-                }
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-                .onAppear {
-                    if index == viewModel.items.count - 5,
-                       viewModel.hasMore,
-                       case .searching = viewModel.mode {
-                        viewModel.loadMore()
+        ScrollViewReader { proxy in
+            List {
+                ForEach(Array(viewModel.items.enumerated()), id: \.offset) { index, item in
+                    SongRow(item: item) {
+                        sheetItem = item
                     }
-                }
-            }
-
-            if viewModel.hasMore, case .searching = viewModel.mode {
-                ProgressView()
-                    .frame(maxWidth: .infinity)
+                    .onTapGesture {
+                        navigator.navigateToPlayer(item: item, queue: viewModel.items)
+                    }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
+                    .id(index)
+                    .onAppear {
+                        if index == viewModel.items.count - 5,
+                           viewModel.hasMore,
+                           case .searching = viewModel.mode {
+                            viewModel.loadMore()
+                        }
+                    }
+                }
+
+                if viewModel.hasMore, case .searching = viewModel.mode {
+                    ProgressView()
+                        .frame(maxWidth: .infinity)
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                }
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .onAppear { scrollProxy = proxy }
         }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
         .background(Color.black)
         .overlay {
             if viewModel.state == .idle, viewModel.items.isEmpty {
-                SongsEmptyState(mode: viewModel.mode)
+                EmptyStateView(mode: .recentlyPlayed)
             }
 
-            if case .error(.empty) = viewModel.state {
-                SongsEmptyState(mode: viewModel.mode)
+            if case .error(.empty) = viewModel.state,
+               case .searching(let query) = viewModel.mode {
+                EmptyStateView(mode: .noResults(query: query))
             }
 
-            if case .error(let error) = viewModel.state, error != .empty {
-                VStack(spacing: DS.Spacing.md) {
-                    Text(error == .offline
-                         ? "No internet connection.\nCheck your network and try again."
-                         : "Couldn't load results.\nPlease try again.")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
+            if case .error(let error) = viewModel.state, error == .offline {
+                EmptyStateView(mode: .offline) { Task { await viewModel.refresh() } }
+            }
 
-                    Button("Try Again") {
-                        Task { await viewModel.refresh() }
-                    }
-                    .font(.subheadline)
-                    .foregroundStyle(.primary)
-                }
+            if case .error(let error) = viewModel.state,
+               error != .empty, error != .offline {
+                EmptyStateView(mode: .error) { Task { await viewModel.refresh() } }
             }
 
             if viewModel.state == .loading, viewModel.items.isEmpty {
                 ProgressView()
             }
         }
-        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search")
+        .searchable(text: $viewModel.searchText, isPresented: $isSearchPresented, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search")
         .onScrollGeometryChange(for: Bool.self) { geometry in
             geometry.contentOffset.y + geometry.contentInsets.top > 0
         } action: { _, collapsed in
@@ -83,16 +82,23 @@ struct SongsView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 if isSearchCollapsed {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundStyle(.gray)
-                        .transition(.opacity)
+                    Button {
+                        withAnimation {
+                            scrollProxy?.scrollTo(0, anchor: .top)
+                        }
+                        isSearchPresented = true
+                    } label: {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundStyle(.gray)
+                    }
+                    .transition(.opacity)
                 }
             }
         }
         .refreshable {
             await viewModel.refresh()
         }
-        .task {
+        .task(id: navigator.path.count) {
             await viewModel.onAppear()
         }
         .sheet(item: $sheetItem) { item in
@@ -110,6 +116,9 @@ struct SongsView: View {
     NavigationStack {
         SongsView(repository: PreviewRepository())
     }
-    .environment(Navigator(repository: PreviewRepository()))
+    .environment(Navigator(
+        repository: PreviewRepository(),
+        playerService: AudioPlayerService(repository: PreviewRepository())
+    ))
     .preferredColorScheme(.dark)
 }

@@ -27,7 +27,7 @@ final class SongsViewModel {
 
     // MARK: - Lifecycle
     func onAppear() async {
-        guard case .recentlyPlayed = mode, items.isEmpty else { return }
+        guard case .recentlyPlayed = mode else { return }
         await loadRecentlyPlayed()
     }
 

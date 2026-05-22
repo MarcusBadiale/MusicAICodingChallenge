@@ -28,21 +28,13 @@ struct AlbumView: View {
                 ProgressView()
             }
 
-            if case .error(let error) = viewModel.state, error != .empty {
-                VStack(spacing: DS.Spacing.md) {
-                    Text(error == .offline
-                         ? "No internet connection."
-                         : "Something went wrong.")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
+            if case .error(let error) = viewModel.state, error == .offline {
+                EmptyStateView(mode: .offline) { Task { await viewModel.onAppear() } }
+            }
 
-                    Button("Try Again") {
-                        Task { await viewModel.onAppear() }
-                    }
-                    .font(.subheadline)
-                    .foregroundStyle(.primary)
-                }
+            if case .error(let error) = viewModel.state,
+               error != .empty, error != .offline {
+                EmptyStateView(mode: .albumError) { Task { await viewModel.onAppear() } }
             }
         }
     }
@@ -99,6 +91,9 @@ struct AlbumView: View {
     NavigationStack {
         AlbumView(collectionId: 1, repository: PreviewRepository())
     }
-    .environment(Navigator(repository: PreviewRepository()))
+    .environment(Navigator(
+        repository: PreviewRepository(),
+        playerService: AudioPlayerService(repository: PreviewRepository())
+    ))
     .preferredColorScheme(.dark)
 }
