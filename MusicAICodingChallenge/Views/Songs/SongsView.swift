@@ -18,10 +18,10 @@ struct SongsView: View {
             List {
                 ForEach(Array(viewModel.items.enumerated()), id: \.offset) { index, item in
                     SongRow(item: item) {
-                        sheetItem = item
-                    }
-                    .onTapGesture {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         navigator.navigateToPlayer(item: item, queue: viewModel.items)
+                    } onMoreTapped: {
+                        sheetItem = item
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
@@ -35,7 +35,8 @@ struct SongsView: View {
                     }
                 }
 
-                if viewModel.hasMore, case .searching = viewModel.mode {
+                if viewModel.hasMore, !viewModel.items.isEmpty,
+                   case .searching = viewModel.mode {
                     ProgressView()
                         .frame(maxWidth: .infinity)
                         .listRowSeparator(.hidden)
@@ -44,6 +45,13 @@ struct SongsView: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
+            .onScrollGeometryChange(for: Bool.self) { geometry in
+                geometry.contentOffset.y + geometry.contentInsets.top > 0
+            } action: { _, collapsed in
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isSearchCollapsed = collapsed
+                }
+            }
             .onAppear { scrollProxy = proxy }
         }
         .background(Color.black)
@@ -66,18 +74,15 @@ struct SongsView: View {
                 EmptyStateView(mode: .error) { Task { await viewModel.refresh() } }
             }
 
-            if viewModel.state == .loading, viewModel.items.isEmpty {
-                ProgressView()
+            if viewModel.state == .loading, viewModel.items.isEmpty,
+               case .searching = viewModel.mode {
+                VStack {
+                    SkeletonList()
+                    Spacer()
+                }
             }
         }
         .searchable(text: $viewModel.searchText, isPresented: $isSearchPresented, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search")
-        .onScrollGeometryChange(for: Bool.self) { geometry in
-            geometry.contentOffset.y + geometry.contentInsets.top > 0
-        } action: { _, collapsed in
-            withAnimation(.easeInOut(duration: 0.2)) {
-                isSearchCollapsed = collapsed
-            }
-        }
         .navigationTitle("Songs")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -112,6 +117,7 @@ struct SongsView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         SongsView(repository: PreviewRepository())
@@ -122,3 +128,4 @@ struct SongsView: View {
     ))
     .preferredColorScheme(.dark)
 }
+#endif

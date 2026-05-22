@@ -37,7 +37,7 @@ struct SongsViewModelTests {
         #expect(vm.state == .idle)
     }
 
-    @Test func onAppearDoesNotReloadIfAlreadyLoaded() async {
+    @Test func onAppearReloadsRecentlyPlayedEachTime() async {
         let repo = MockMusicRepository()
         repo.recentlyPlayedHandler = { _ in [.mock(id: 1)] }
         let (vm, _) = makeViewModel(repository: repo)
@@ -45,7 +45,7 @@ struct SongsViewModelTests {
         await vm.onAppear()
         await vm.onAppear()
 
-        #expect(repo.recentlyPlayedCallCount == 1)
+        #expect(repo.recentlyPlayedCallCount == 2)
     }
 
     // MARK: - Mode transitions
@@ -65,13 +65,14 @@ struct SongsViewModelTests {
     }
 
     // MARK: - Error handling
-    @Test func recentlyPlayedErrorSetsErrorState() async {
+    @Test func recentlyPlayedErrorFallsBackToIdle() async {
         let repo = MockMusicRepository()
         repo.recentlyPlayedHandler = { _ in throw MusicError.serverError }
         let (vm, _) = makeViewModel(repository: repo)
 
         await vm.onAppear()
 
-        #expect(vm.state == .error(.serverError))
+        #expect(vm.state == .idle)
+        #expect(vm.items.isEmpty)
     }
 }

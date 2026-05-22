@@ -1,6 +1,6 @@
 import Foundation
 
-nonisolated protocol Endpoint: Sendable {
+protocol Endpoint: Sendable {
     var baseURL: URL { get }
     var path: String { get }
     var method: HTTPMethod { get }
@@ -9,7 +9,7 @@ nonisolated protocol Endpoint: Sendable {
     var body: Data? { get }
 }
 
-nonisolated extension Endpoint {
+extension Endpoint {
     var queryItems: [URLQueryItem] { [] }
     var headers: [String: String] { [:] }
     var body: Data? { nil }

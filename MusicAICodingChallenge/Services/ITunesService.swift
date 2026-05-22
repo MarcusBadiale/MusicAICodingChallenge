@@ -1,6 +1,6 @@
 import Foundation
 
-nonisolated final class ITunesService: MusicServiceProtocol {
+final class ITunesService: MusicServiceProtocol {
     private let client: NetworkClientProtocol
 
     init(client: NetworkClientProtocol = NetworkClient()) {

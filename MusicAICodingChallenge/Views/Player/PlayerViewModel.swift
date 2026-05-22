@@ -25,6 +25,9 @@ final class PlayerViewModel {
     var formattedProgress: String { formatTime(progress) }
     var formattedRemaining: String { "-\(formatTime(max(0, duration - progress)))" }
 
+    var accessibleProgress: String { formatTimeAccessible(progress) }
+    var accessibleDuration: String { formatTimeAccessible(duration) }
+
     func togglePlayPause() {
         playerService.togglePlayPause()
     }
@@ -45,5 +48,17 @@ final class PlayerViewModel {
         let mins = Int(seconds) / 60
         let secs = Int(seconds) % 60
         return String(format: "%d:%02d", mins, secs)
+    }
+
+    private func formatTimeAccessible(_ seconds: TimeInterval) -> String {
+        let mins = Int(seconds) / 60
+        let secs = Int(seconds) % 60
+        if mins > 0 && secs > 0 {
+            return "\(mins) minute\(mins == 1 ? "" : "s") \(secs) second\(secs == 1 ? "" : "s")"
+        } else if mins > 0 {
+            return "\(mins) minute\(mins == 1 ? "" : "s")"
+        } else {
+            return "\(secs) second\(secs == 1 ? "" : "s")"
+        }
     }
 }

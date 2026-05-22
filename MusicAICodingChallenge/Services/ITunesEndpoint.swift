@@ -1,6 +1,6 @@
 import Foundation
 
-nonisolated enum ITunesEndpoint: Endpoint {
+enum ITunesEndpoint: Endpoint {
     case search(query: String, offset: Int, limit: Int)
     case lookup(collectionId: Int)
 

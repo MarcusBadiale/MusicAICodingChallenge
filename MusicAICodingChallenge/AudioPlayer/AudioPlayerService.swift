@@ -2,6 +2,7 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 import Combine
+import UIKit
 
 @MainActor
 @Observable
@@ -96,6 +97,14 @@ final class AudioPlayerService {
     private func recordPlay() {
         guard let item = queue.currentItem else { return }
         Task { try? await repository.recordPlay(item: item) }
+        announceTrackChange(item)
+    }
+
+    private func announceTrackChange(_ item: MusicItem) {
+        UIAccessibility.post(
+            notification: .announcement,
+            argument: "Now playing: \(item.trackName), \(item.artistName)"
+        )
     }
 
     // MARK: - Audio Session
@@ -114,8 +123,10 @@ extension AudioPlayerService {
             forInterval: CMTime(seconds: 0.5, preferredTimescale: 600),
             queue: .main
         ) { [weak self] time in
+            guard let self else { return }
             Task { @MainActor in
-                self?.progress = time.seconds
+                self.progress = time.seconds
+                self.updateNowPlayingProgress()
             }
         }
 
@@ -131,8 +142,8 @@ extension AudioPlayerService {
             forName: .AVPlayerItemDidPlayToEndTime,
             object: nil, queue: .main
         ) { [weak self] _ in
+            guard let self else { return }
             Task { @MainActor in
-                guard let self else { return }
                 if self.queue.hasNext {
                     self.queue.advance()
                     self.enqueueUpcoming()
@@ -195,6 +206,13 @@ extension AudioPlayerService {
                 }
             }
         }
+    }
+
+    private func updateNowPlayingProgress() {
+        guard var info = MPNowPlayingInfoCenter.default().nowPlayingInfo else { return }
+        info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = progress
+        info[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1.0 : 0.0
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
     }
 }
 

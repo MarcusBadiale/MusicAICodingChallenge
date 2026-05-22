@@ -63,11 +63,7 @@ struct PlayerView: View {
 
     // MARK: - Artwork
     private var artwork: some View {
-        AsyncImage(url: viewModel.currentItem?.artworkUrl) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        } placeholder: {
+        CachedAsyncImage(url: viewModel.currentItem?.artworkUrl) {
             RoundedRectangle(cornerRadius: DS.Radius.lg)
                 .fill(Color(.systemGray6))
         }
@@ -143,13 +139,14 @@ struct PlayerView: View {
         }
         .padding(.bottom, DS.Spacing.xxl)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Progress: \(viewModel.formattedProgress) of \(viewModel.formattedRemaining)")
+        .accessibilityLabel("\(viewModel.accessibleProgress) of \(viewModel.accessibleDuration)")
     }
 
     // MARK: - Transport Controls
     private var transportControls: some View {
         HStack(spacing: DS.Spacing.huge) {
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 viewModel.previous()
             } label: {
                 Image(systemName: "backward.fill")
@@ -163,9 +160,11 @@ struct PlayerView: View {
             .accessibilityLabel("Previous track")
 
             Button {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 viewModel.togglePlayPause()
             } label: {
                 Image(systemName: viewModel.isPlaying ? "pause.fill" : "play.fill")
+                    .contentTransition(.symbolEffect(.replace))
                     .font(.system(size: DS.IconSize.lg))
                     .foregroundStyle(.primary)
                     .frame(width: DS.Size.thumbnail, height: DS.Size.thumbnail)
@@ -176,6 +175,7 @@ struct PlayerView: View {
             .accessibilityLabel(viewModel.isPlaying ? "Pause" : "Play")
 
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 viewModel.next()
             } label: {
                 Image(systemName: "forward.fill")
@@ -191,6 +191,7 @@ struct PlayerView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         PlayerView(viewModel: PlayerViewModel(
@@ -205,3 +206,4 @@ struct PlayerView: View {
     ))
     .preferredColorScheme(.dark)
 }
+#endif

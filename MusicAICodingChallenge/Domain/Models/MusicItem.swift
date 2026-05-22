@@ -15,6 +15,7 @@ struct MusicItem: Sendable, Equatable, Identifiable, Hashable {
     let discNumber: Int?
 }
 
+#if DEBUG
 extension MusicItem {
     static func mock(
         id: Int = 1,
@@ -46,3 +47,4 @@ extension MusicItem {
         )
     }
 }
+#endif

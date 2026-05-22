@@ -1,6 +1,6 @@
 import Foundation
 
-nonisolated struct ITunesTrack: Decodable, Sendable {
+struct ITunesTrack: Decodable, Sendable {
     let wrapperType: String?
     let kind: String?
     let trackId: Int?

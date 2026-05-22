@@ -5,6 +5,7 @@ enum Route: Hashable {
     case album(collectionId: Int)
 }
 
+@MainActor
 @Observable
 final class Navigator {
     var path: [Route] = []

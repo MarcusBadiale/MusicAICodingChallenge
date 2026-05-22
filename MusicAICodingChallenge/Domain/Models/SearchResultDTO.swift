@@ -1,6 +1,6 @@
 import Foundation
 
-nonisolated struct SearchResultDTO: Sendable, Equatable {
+struct SearchResultDTO: Sendable, Equatable {
     let items: [MusicItemDTO]
     let totalCount: Int
 }
