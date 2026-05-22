@@ -2,9 +2,11 @@ import SwiftUI
 
 struct PlayerView: View {
     @Environment(Navigator.self) private var navigator
-    @Bindable var viewModel: PlayerViewModel
+    var viewModel: PlayerViewModel
 
     @State private var showSheet = false
+    @State private var isSeeking = false
+    @State private var seekValue: TimeInterval = 0
 
     var body: some View {
         VStack(spacing: 0) {
@@ -42,6 +44,10 @@ struct PlayerView: View {
                     Image(systemName: "ellipsis")
                 }
             }
+        }
+        .onChange(of: viewModel.currentItem) {
+            isSeeking = false
+            seekValue = 0
         }
         .sheet(isPresented: $showSheet) {
             if let item = viewModel.currentItem {
@@ -105,11 +111,18 @@ struct PlayerView: View {
     private var progressSection: some View {
         VStack(spacing: DS.Spacing.xs) {
             Slider(
-                value: $viewModel.progress,
+                value: Binding(
+                    get: { isSeeking ? seekValue : viewModel.progress },
+                    set: { newValue in
+                        seekValue = newValue
+                        isSeeking = true
+                    }
+                ),
                 in: 0...max(viewModel.duration, 1)
             ) { editing in
                 if !editing {
-                    viewModel.seek(to: viewModel.progress)
+                    viewModel.seek(to: seekValue)
+                    isSeeking = false
                 }
             }
             .tint(.primary)
@@ -180,18 +193,15 @@ struct PlayerView: View {
 
 #Preview {
     NavigationStack {
-        PlayerView(viewModel: {
-            let vm = PlayerViewModel()
-            vm.load(
-                item: .mock(trackName: "Yellow", artistName: "Coldplay", albumName: "Parachutes"),
-                queue: [
-                    .mock(id: 1, trackName: "Yellow", artistName: "Coldplay", albumName: "Parachutes"),
-                    .mock(id: 2, trackName: "Shiver", artistName: "Coldplay", albumName: "Parachutes"),
-                ]
+        PlayerView(viewModel: PlayerViewModel(
+            playerService: AudioPlayerService(
+                repository: PreviewRepository()
             )
-            return vm
-        }())
+        ))
     }
-    .environment(Navigator(repository: PreviewRepository()))
+    .environment(Navigator(
+        repository: PreviewRepository(),
+        playerService: AudioPlayerService(repository: PreviewRepository())
+    ))
     .preferredColorScheme(.dark)
 }

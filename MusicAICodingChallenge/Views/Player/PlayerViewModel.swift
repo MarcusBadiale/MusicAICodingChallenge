@@ -3,50 +3,42 @@ import Foundation
 @MainActor
 @Observable
 final class PlayerViewModel {
-    private(set) var currentItem: MusicItem?
-    private(set) var queue: [MusicItem] = []
-    private(set) var currentIndex: Int = 0
+    private let playerService: AudioPlayerService
 
-    private(set) var isPlaying: Bool = false
-    var progress: TimeInterval = 0
-    private(set) var duration: TimeInterval = 30
+    init(playerService: AudioPlayerService) {
+        self.playerService = playerService
+    }
+
+    var currentItem: MusicItem? { playerService.currentItem }
+    var isPlaying: Bool { playerService.isPlaying }
+    var isBuffering: Bool { playerService.isBuffering }
+    var progress: TimeInterval {
+        get { playerService.progress }
+        set { playerService.seek(to: newValue) }
+    }
+    var duration: TimeInterval { playerService.duration }
+    var hasNext: Bool { playerService.hasNext }
+    var hasPrevious: Bool { playerService.hasPrevious }
 
     var repeatEnabled: Bool = false
-
-    var hasNext: Bool { currentIndex + 1 < queue.count }
-    var hasPrevious: Bool { currentIndex > 0 }
 
     var formattedProgress: String { formatTime(progress) }
     var formattedRemaining: String { "-\(formatTime(max(0, duration - progress)))" }
 
-    func load(item: MusicItem, queue: [MusicItem]) {
-        self.queue = queue
-        self.currentIndex = queue.firstIndex(where: { $0.id == item.id }) ?? 0
-        self.currentItem = queue.indices.contains(currentIndex) ? queue[currentIndex] : item
-        self.isPlaying = false
-        self.progress = 0
-    }
-
     func togglePlayPause() {
-        isPlaying.toggle()
+        playerService.togglePlayPause()
     }
 
     func next() {
-        guard hasNext else { return }
-        currentIndex += 1
-        currentItem = queue[currentIndex]
-        progress = 0
+        playerService.next()
     }
 
     func previous() {
-        guard hasPrevious else { return }
-        currentIndex -= 1
-        currentItem = queue[currentIndex]
-        progress = 0
+        playerService.previous()
     }
 
     func seek(to value: TimeInterval) {
-        progress = value
+        playerService.seek(to: value)
     }
 
     private func formatTime(_ seconds: TimeInterval) -> String {

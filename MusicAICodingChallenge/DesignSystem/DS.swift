@@ -24,6 +24,7 @@ enum DS {
     // MARK: - Component Sizes
     enum Size {
         static let tapTarget: CGFloat = 44
+        static let miniArtwork: CGFloat = 40
         static let thumbnail: CGFloat = 56
         static let albumArtwork: CGFloat = 200
         static let playerArtwork: CGFloat = 280

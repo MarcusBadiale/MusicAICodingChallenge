@@ -5,6 +5,7 @@ import SwiftData
 struct MusicAICodingChallengeApp: App {
     let container: ModelContainer
     let repository: MusicRepositoryProtocol
+    let playerService: AudioPlayerService
 
     init() {
         let container = try! ModelContainer(for: CachedSong.self)
@@ -25,13 +26,16 @@ struct MusicAICodingChallengeApp: App {
 
         let service: MusicServiceProtocol = ITunesService(client: networkClient)
 
+        let repository: MusicRepositoryProtocol = MusicRepository(service: service, store: store)
+
         self.container = container
-        self.repository = MusicRepository(service: service, store: store)
+        self.repository = repository
+        self.playerService = AudioPlayerService(repository: repository)
     }
 
     var body: some Scene {
         WindowGroup {
-            ContentView(repository: repository)
+            ContentView(repository: repository, playerService: playerService)
         }
     }
 }
