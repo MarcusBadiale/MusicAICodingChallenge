@@ -14,19 +14,11 @@
 			remoteGlobalIDString = ABFD6D932FBDF7C100E23171;
 			remoteInfo = MusicAICodingChallenge;
 		};
-		ABFD6DAC2FBDF7C200E23171 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABFD6D8C2FBDF7C100E23171 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = ABFD6D932FBDF7C100E23171;
-			remoteInfo = MusicAICodingChallenge;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		ABFD6D942FBDF7C100E23171 /* MusicAICodingChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicAICodingChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFD6DA12FBDF7C200E23171 /* MusicAICodingChallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicAICodingChallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABFD6DAB2FBDF7C200E23171 /* MusicAICodingChallengeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicAICodingChallengeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -53,11 +45,6 @@
 			path = MusicAICodingChallengeTests;
 			sourceTree = "<group>";
 		};
-		ABFD6DAE2FBDF7C200E23171 /* MusicAICodingChallengeUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MusicAICodingChallengeUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,13 +62,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ABFD6DA82FBDF7C200E23171 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -90,7 +70,6 @@
 			children = (
 				ABFD6D962FBDF7C100E23171 /* MusicAICodingChallenge */,
 				ABFD6DA42FBDF7C200E23171 /* MusicAICodingChallengeTests */,
-				ABFD6DAE2FBDF7C200E23171 /* MusicAICodingChallengeUITests */,
 				ABFD6D952FBDF7C100E23171 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,7 +79,6 @@
 			children = (
 				ABFD6D942FBDF7C100E23171 /* MusicAICodingChallenge.app */,
 				ABFD6DA12FBDF7C200E23171 /* MusicAICodingChallengeTests.xctest */,
-				ABFD6DAB2FBDF7C200E23171 /* MusicAICodingChallengeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,29 +131,6 @@
 			productReference = ABFD6DA12FBDF7C200E23171 /* MusicAICodingChallengeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		ABFD6DAA2FBDF7C200E23171 /* MusicAICodingChallengeUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = ABFD6DBB2FBDF7C200E23171 /* Build configuration list for PBXNativeTarget "MusicAICodingChallengeUITests" */;
-			buildPhases = (
-				ABFD6DA72FBDF7C200E23171 /* Sources */,
-				ABFD6DA82FBDF7C200E23171 /* Frameworks */,
-				ABFD6DA92FBDF7C200E23171 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				ABFD6DAD2FBDF7C200E23171 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				ABFD6DAE2FBDF7C200E23171 /* MusicAICodingChallengeUITests */,
-			);
-			name = MusicAICodingChallengeUITests;
-			packageProductDependencies = (
-			);
-			productName = MusicAICodingChallengeUITests;
-			productReference = ABFD6DAB2FBDF7C200E23171 /* MusicAICodingChallengeUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -190,10 +145,6 @@
 						CreatedOnToolsVersion = 26.2;
 					};
 					ABFD6DA02FBDF7C200E23171 = {
-						CreatedOnToolsVersion = 26.2;
-						TestTargetID = ABFD6D932FBDF7C100E23171;
-					};
-					ABFD6DAA2FBDF7C200E23171 = {
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = ABFD6D932FBDF7C100E23171;
 					};
@@ -215,7 +166,6 @@
 			targets = (
 				ABFD6D932FBDF7C100E23171 /* MusicAICodingChallenge */,
 				ABFD6DA02FBDF7C200E23171 /* MusicAICodingChallengeTests */,
-				ABFD6DAA2FBDF7C200E23171 /* MusicAICodingChallengeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -229,13 +179,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		ABFD6D9F2FBDF7C200E23171 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ABFD6DA92FBDF7C200E23171 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -259,13 +202,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ABFD6DA72FBDF7C200E23171 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -273,11 +209,6 @@
 			isa = PBXTargetDependency;
 			target = ABFD6D932FBDF7C100E23171 /* MusicAICodingChallenge */;
 			targetProxy = ABFD6DA22FBDF7C200E23171 /* PBXContainerItemProxy */;
-		};
-		ABFD6DAD2FBDF7C200E23171 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = ABFD6D932FBDF7C100E23171 /* MusicAICodingChallenge */;
-			targetProxy = ABFD6DAC2FBDF7C200E23171 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -410,7 +341,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = SJTT4SW9L7;
+				DEVELOPMENT_TEAM = LZ4KUFVTZH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MusicAICodingChallenge/Info.plist;
@@ -424,7 +355,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcola.MusicAICodingChallenge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marcus.MusicAICodingChallenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -442,7 +373,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = SJTT4SW9L7;
+				DEVELOPMENT_TEAM = LZ4KUFVTZH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MusicAICodingChallenge/Info.plist;
@@ -456,7 +387,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcola.MusicAICodingChallenge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marcus.MusicAICodingChallenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -511,46 +442,6 @@
 			};
 			name = Release;
 		};
-		ABFD6DBC2FBDF7C200E23171 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = SJTT4SW9L7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcola.MusicAICodingChallengeUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MusicAICodingChallenge;
-			};
-			name = Debug;
-		};
-		ABFD6DBD2FBDF7C200E23171 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = SJTT4SW9L7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcola.MusicAICodingChallengeUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MusicAICodingChallenge;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -577,15 +468,6 @@
 			buildConfigurations = (
 				ABFD6DB92FBDF7C200E23171 /* Debug */,
 				ABFD6DBA2FBDF7C200E23171 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		ABFD6DBB2FBDF7C200E23171 /* Build configuration list for PBXNativeTarget "MusicAICodingChallengeUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				ABFD6DBC2FBDF7C200E23171 /* Debug */,
-				ABFD6DBD2FBDF7C200E23171 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

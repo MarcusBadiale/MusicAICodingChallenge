@@ -4,7 +4,9 @@ An iOS music app that searches and plays songs via the Apple iTunes API, with of
 
 Built with **Swift 6**, **SwiftUI**, **MVVM**, and **Swift Concurrency**.
 
-<!-- TODO: Add app demo GIF/video here -->
+<p align="center">
+  <img src="Screenshots/Demo.gif" width="300" />
+</p>
 
 ## Features
 
@@ -21,11 +23,11 @@ Built with **Swift 6**, **SwiftUI**, **MVVM**, and **Swift Concurrency**.
 
 | Songs | Player | Album |
 |-------|--------|-------|
-| <!-- TODO: Songs screenshot --> | <!-- TODO: Player screenshot --> | <!-- TODO: Album screenshot --> |
+| <img src="screenshots/Songs.PNG" width="250" /> | <img src="screenshots/Player.PNG" width="250" /> | <img src="screenshots/Album.PNG" width="250" /> |
 
 | Search | Lock Screen | Splash |
 |--------|-------------|--------|
-| <!-- TODO: Search with skeleton --> | <!-- TODO: Lock screen Now Playing --> | <!-- TODO: Splash screen --> |
+| <img src="screenshots/Search.PNG" width="250" /> | <img src="screenshots/Lock_Screen.PNG" width="250" /> | <img src="screenshots/Splash.PNG" width="250" /> |
 
 ## Architecture
 
@@ -86,14 +88,6 @@ Every layer is tested by substituting the layer below via its protocol:
 
 Tests use Swift Testing framework and run in parallel — no `URLProtocol`, no static state, no `@Suite(.serialized)`.
 
-```bash
-# Run tests
-xcodebuild -project MusicAICodingChallenge.xcodeproj \
-  -scheme MusicAICodingChallenge \
-  -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
-  test
-```
-
 ## Requirements
 
 - Xcode 26.2+
@@ -104,7 +98,8 @@ xcodebuild -project MusicAICodingChallenge.xcodeproj \
 
 1. Clone the repository
 2. Open `MusicAICodingChallenge.xcodeproj` in Xcode
-3. Select a simulator or device and run (Cmd+R)
+3. If running on a physical device, update the signing team in **Signing & Capabilities**
+4. Select a simulator or device and run (Cmd+R)
 
 ### Release Build (recommended for testing)
 
