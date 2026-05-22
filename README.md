@@ -23,11 +23,11 @@ Built with **Swift 6**, **SwiftUI**, **MVVM**, and **Swift Concurrency**.
 
 | Songs | Player | Album |
 |-------|--------|-------|
-| <img src="screenshots/Songs.PNG" width="250" /> | <img src="screenshots/Player.PNG" width="250" /> | <img src="screenshots/Album.PNG" width="250" /> |
+| <img src="Screenshots/Songs.PNG" width="250" /> | <img src="Screenshots/Player.PNG" width="250" /> | <img src="Screenshots/Album.PNG" width="250" /> |
 
 | Search | Lock Screen | Splash |
 |--------|-------------|--------|
-| <img src="screenshots/Search.PNG" width="250" /> | <img src="screenshots/Lock_Screen.PNG" width="250" /> | <img src="screenshots/Splash.PNG" width="250" /> |
+| <img src="Screenshots/Search.PNG" width="250" /> | <img src="Screenshots/Lock_Screen.PNG" width="250" /> | <img src="Screenshots/Splash.PNG" width="250" /> |
 
 ## Architecture
 
