@@ -1,6 +1,6 @@
 import Foundation
 
-nonisolated final class NetworkClient: NetworkClientProtocol {
+final class NetworkClient: NetworkClientProtocol {
     private let transport: HTTPTransport
     private let decoder: JSONDecoder
 

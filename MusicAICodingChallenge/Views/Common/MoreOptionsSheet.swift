@@ -49,6 +49,8 @@ struct MoreOptionsSheet: View {
     }
 }
 
+#if DEBUG
 #Preview {
     MoreOptionsSheet(item: .mock(), onViewAlbum: {})
 }
+#endif

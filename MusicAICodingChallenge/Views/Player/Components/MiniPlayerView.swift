@@ -8,11 +8,7 @@ struct MiniPlayerView: View {
         if let item = playerService.currentItem {
             Button(action: onTap) {
                 HStack(spacing: DS.Spacing.md) {
-                    AsyncImage(url: item.artworkUrl) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    } placeholder: {
+                    CachedAsyncImage(url: item.artworkUrl) {
                         RoundedRectangle(cornerRadius: DS.Radius.sm)
                             .fill(Color(.systemGray6))
                     }
@@ -34,9 +30,11 @@ struct MiniPlayerView: View {
                     Spacer()
 
                     Button {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                         playerService.togglePlayPause()
                     } label: {
                         Image(systemName: playerService.isPlaying ? "pause.fill" : "play.fill")
+                            .contentTransition(.symbolEffect(.replace))
                             .font(.system(size: DS.IconSize.md))
                             .foregroundStyle(.primary)
                             .frame(width: DS.Size.tapTarget, height: DS.Size.tapTarget)

@@ -1,6 +1,6 @@
 import Foundation
 
-nonisolated struct MusicItemDTO: Sendable, Equatable, Identifiable, Hashable {
+struct MusicItemDTO: Sendable, Equatable, Identifiable, Hashable {
     let id: Int
     let trackName: String
     let artistName: String

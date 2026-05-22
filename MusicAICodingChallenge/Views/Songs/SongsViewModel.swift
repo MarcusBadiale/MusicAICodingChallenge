@@ -14,7 +14,10 @@ final class SongsViewModel {
     private(set) var state: ViewState = .idle
 
     var searchText: String = "" {
-        didSet { onSearchTextChanged() }
+        didSet {
+            guard searchText != oldValue else { return }
+            onSearchTextChanged()
+        }
     }
 
     private let repository: MusicRepositoryProtocol
@@ -39,6 +42,8 @@ final class SongsViewModel {
 
         if query.isEmpty {
             mode = .recentlyPlayed
+            items = []
+            state = .idle
             searchTask = Task { [weak self] in
                 await self?.loadRecentlyPlayed()
             }
@@ -46,6 +51,8 @@ final class SongsViewModel {
         }
 
         mode = .searching(query: query)
+        items = []
+        state = .loading
         searchTask = Task { [weak self] in
             try? await Task.sleep(for: .milliseconds(300))
             guard !Task.isCancelled else { return }
@@ -71,17 +78,15 @@ final class SongsViewModel {
 
     // MARK: - Recently played
     private func loadRecentlyPlayed() async {
-        state = .loading
         do {
             let recent = try await repository.getRecentlyPlayed(limit: 50)
             guard !Task.isCancelled, mode == .recentlyPlayed else { return }
             items = recent
             hasMore = false
             state = recent.isEmpty ? .idle : .loaded
-        } catch let error as MusicError {
-            state = .error(error)
         } catch {
-            state = .error(.serverError)
+            items = []
+            state = .idle
         }
     }
 

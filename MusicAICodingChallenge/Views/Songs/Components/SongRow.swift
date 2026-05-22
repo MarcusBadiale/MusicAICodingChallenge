@@ -3,34 +3,39 @@ import SwiftUI
 struct SongRow: View {
     let item: MusicItem
     var showMoreButton: Bool = true
+    var onTapped: (() -> Void)?
     var onMoreTapped: (() -> Void)?
 
     var body: some View {
         HStack(spacing: DS.Spacing.md) {
-            AsyncImage(url: item.artworkUrl) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                RoundedRectangle(cornerRadius: DS.Radius.sm)
-                    .fill(Color(.systemGray6))
+            Button {
+                onTapped?()
+            } label: {
+                HStack(spacing: DS.Spacing.md) {
+                    CachedAsyncImage(url: item.artworkUrl) {
+                        RoundedRectangle(cornerRadius: DS.Radius.sm)
+                            .fill(Color(.systemGray6))
+                    }
+                    .frame(width: DS.Size.thumbnail, height: DS.Size.thumbnail)
+                    .clipShape(RoundedRectangle(cornerRadius: DS.Radius.sm))
+
+                    VStack(alignment: .leading, spacing: DS.Spacing.xxs) {
+                        Text(item.trackName)
+                            .font(.headline)
+                            .foregroundStyle(.primary)
+                            .lineLimit(1)
+
+                        Text(item.artistName)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
+                }
+                .contentShape(Rectangle())
             }
-            .frame(width: DS.Size.thumbnail, height: DS.Size.thumbnail)
-            .clipShape(RoundedRectangle(cornerRadius: DS.Radius.sm))
-
-            VStack(alignment: .leading, spacing: DS.Spacing.xxs) {
-                Text(item.trackName)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                    .lineLimit(1)
-
-                Text(item.artistName)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-            }
-
-            Spacer()
+            .buttonStyle(.plain)
 
             if showMoreButton {
                 Button {
@@ -45,12 +50,12 @@ struct SongRow: View {
             }
         }
         .padding(.vertical, DS.Spacing.xs)
-        .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(item.trackName), \(item.artistName)")
     }
 }
 
+#if DEBUG
 #Preview {
     List {
         SongRow(item: .mock(trackName: "Yellow", artistName: "Coldplay"))
@@ -62,3 +67,4 @@ struct SongRow: View {
     .listStyle(.plain)
     .preferredColorScheme(.dark)
 }
+#endif

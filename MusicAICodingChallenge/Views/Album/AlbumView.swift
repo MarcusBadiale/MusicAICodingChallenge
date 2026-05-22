@@ -25,7 +25,10 @@ struct AlbumView: View {
         }
         .overlay {
             if viewModel.state == .loading {
-                ProgressView()
+                VStack(spacing: DS.Spacing.xxxl) {
+                    SkeletonAlbumHero()
+                    SkeletonList()
+                }
             }
 
             if case .error(let error) = viewModel.state, error == .offline {
@@ -44,11 +47,7 @@ struct AlbumView: View {
         VStack(spacing: DS.Spacing.md) {
             let firstTrack = viewModel.tracks.first
 
-            AsyncImage(url: firstTrack?.artworkUrl) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
+            CachedAsyncImage(url: firstTrack?.artworkUrl) {
                 RoundedRectangle(cornerRadius: DS.Radius.md)
                     .fill(Color(.systemGray6))
             }
@@ -76,17 +75,16 @@ struct AlbumView: View {
     private var trackList: some View {
         LazyVStack(spacing: 0) {
             ForEach(viewModel.tracks) { track in
-                SongRow(item: track, showMoreButton: false)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        navigator.navigateToPlayer(item: track, queue: viewModel.tracks)
-                    }
-                    .padding(.horizontal, DS.Spacing.xl)
+                SongRow(item: track, showMoreButton: false) {
+                    navigator.navigateToPlayer(item: track, queue: viewModel.tracks)
+                }
+                .padding(.horizontal, DS.Spacing.xl)
             }
         }
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         AlbumView(collectionId: 1, repository: PreviewRepository())
@@ -97,3 +95,4 @@ struct AlbumView: View {
     ))
     .preferredColorScheme(.dark)
 }
+#endif
