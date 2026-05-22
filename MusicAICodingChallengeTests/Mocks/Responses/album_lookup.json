@@ -1,0 +1,32 @@
+{
+  "resultCount": 3,
+  "results": [
+    {
+      "wrapperType": "collection",
+      "collectionType": "Album",
+      "collectionId": 1544494115,
+      "collectionName": "30",
+      "artistName": "Adele"
+    },
+    {
+      "wrapperType": "track",
+      "kind": "song",
+      "trackId": 1544494118,
+      "trackName": "Easy On Me",
+      "artistName": "Adele",
+      "collectionId": 1544494115,
+      "collectionName": "30",
+      "trackTimeMillis": 224695
+    },
+    {
+      "wrapperType": "track",
+      "kind": "song",
+      "trackId": 1544494120,
+      "trackName": "Oh My God",
+      "artistName": "Adele",
+      "collectionId": 1544494115,
+      "collectionName": "30",
+      "trackTimeMillis": 218773
+    }
+  ]
+}

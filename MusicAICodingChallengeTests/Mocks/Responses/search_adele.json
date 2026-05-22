@@ -1,0 +1,33 @@
+{
+  "resultCount": 2,
+  "results": [
+    {
+      "wrapperType": "track",
+      "kind": "song",
+      "trackId": 1544494118,
+      "trackName": "Easy On Me",
+      "artistName": "Adele",
+      "collectionId": 1544494115,
+      "collectionName": "30",
+      "previewUrl": "https://audio-ssl.itunes.apple.com/preview/mzaf_123.m4a",
+      "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music115/100x100bb.jpg",
+      "trackTimeMillis": 224695,
+      "releaseDate": "2021-10-14T12:00:00Z",
+      "primaryGenreName": "Pop"
+    },
+    {
+      "wrapperType": "track",
+      "kind": "song",
+      "trackId": 1544494120,
+      "trackName": "Oh My God",
+      "artistName": "Adele",
+      "collectionId": 1544494115,
+      "collectionName": "30",
+      "previewUrl": "https://audio-ssl.itunes.apple.com/preview/mzaf_456.m4a",
+      "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music115/100x100bb.jpg",
+      "trackTimeMillis": 218773,
+      "releaseDate": "2021-11-19T12:00:00Z",
+      "primaryGenreName": "Pop"
+    }
+  ]
+}
