@@ -29,7 +29,6 @@ final class AudioPlayerService {
     }
 
     // MARK: - Public API
-
     func play(_ items: [MusicItem], startingAt index: Int = 0) {
         activateAudioSessionIfNeeded()
         queue = PlayQueue(items: items, currentIndex: index)
@@ -66,7 +65,6 @@ final class AudioPlayerService {
     }
 
     // MARK: - Queue Management
-
     private func rebuildQueuePlayer() {
         queuePlayer.removeAllItems()
         for offset in 0...1 {
@@ -95,14 +93,12 @@ final class AudioPlayerService {
     }
 
     // MARK: - Record Play (fire-and-forget)
-
     private func recordPlay() {
         guard let item = queue.currentItem else { return }
         Task { try? await repository.recordPlay(item: item) }
     }
 
     // MARK: - Audio Session
-
     private func activateAudioSessionIfNeeded() {
         guard !audioSessionActivated else { return }
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
@@ -112,7 +108,6 @@ final class AudioPlayerService {
 }
 
 // MARK: - Observers
-
 extension AudioPlayerService {
     private func setupObservers() {
         timeObserver = queuePlayer.addPeriodicTimeObserver(
@@ -150,7 +145,6 @@ extension AudioPlayerService {
 }
 
 // MARK: - Now Playing + Remote Commands
-
 extension AudioPlayerService {
     private func setupNowPlayingCommands() {
         let center = MPRemoteCommandCenter.shared()
@@ -205,7 +199,6 @@ extension AudioPlayerService {
 }
 
 // MARK: - Safe Array Access
-
 private extension Array {
     subscript(safe index: Int) -> Element? {
         indices.contains(index) ? self[index] : nil
