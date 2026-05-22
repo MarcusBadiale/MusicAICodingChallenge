@@ -1,0 +1,12 @@
+{
+  "resultCount": 1,
+  "results": [
+    {
+      "wrapperType": "track",
+      "kind": "song",
+      "trackId": 999,
+      "trackName": "Minimal Track",
+      "artistName": "Minimal Artist"
+    }
+  ]
+}

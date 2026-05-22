@@ -1,0 +1,13 @@
+{
+  "resultCount": 1,
+  "results": [
+    {
+      "wrapperType": "track",
+      "kind": "song",
+      "trackId": 1,
+      "trackName": "Art Track",
+      "artistName": "Art Artist",
+      "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music115/100x100bb.jpg"
+    }
+  ]
+}

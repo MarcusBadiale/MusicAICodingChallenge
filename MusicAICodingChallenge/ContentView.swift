@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  MusicAICodingChallenge
-//
-//  Created by Marcus Badiale on 20/05/26.
-//
-
 import SwiftUI
 
 struct ContentView: View {
