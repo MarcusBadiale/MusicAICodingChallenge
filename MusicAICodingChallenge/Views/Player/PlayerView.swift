@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct PlayerView: View {
+    @Environment(Navigator.self) private var navigator
     @Bindable var viewModel: PlayerViewModel
-    var onAlbumTapped: ((Int) -> Void)?
 
     @State private var showSheet = false
 
@@ -24,7 +24,7 @@ struct PlayerView: View {
                 if let albumName = viewModel.currentItem?.albumName,
                    let collectionId = viewModel.currentItem?.collectionId {
                     Button {
-                        onAlbumTapped?(collectionId)
+                        navigator.navigateToAlbum(collectionId: collectionId)
                     } label: {
                         Text(albumName)
                             .font(.footnote.bold())
@@ -48,7 +48,7 @@ struct PlayerView: View {
                 MoreOptionsSheet(item: item) {
                     showSheet = false
                     if let collectionId = item.collectionId {
-                        onAlbumTapped?(collectionId)
+                        navigator.navigateToAlbum(collectionId: collectionId)
                     }
                 }
             }
@@ -196,5 +196,6 @@ struct PlayerView: View {
             return vm
         }())
     }
+    .environment(Navigator(repository: PreviewRepository()))
     .preferredColorScheme(.dark)
 }

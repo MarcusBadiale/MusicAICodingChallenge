@@ -1,56 +1,28 @@
 import SwiftUI
 
-enum Route: Hashable {
-    case player(item: MusicItem, queue: [MusicItem])
-    case album(collectionId: Int)
-}
-
 struct ContentView: View {
-    let repository: MusicRepositoryProtocol
-    @State private var path: [Route] = []
-    @State private var songsViewModel: SongsViewModel?
-    @State private var playerViewModel = PlayerViewModel()
+    @State private var navigator: Navigator
+
+    init(repository: MusicRepositoryProtocol) {
+        _navigator = State(initialValue: Navigator(repository: repository))
+    }
 
     var body: some View {
-        NavigationStack(path: $path) {
-            Group {
-                if let songsViewModel {
-                    SongsView(viewModel: songsViewModel) { item, queue in
-                        playerViewModel.load(item: item, queue: queue)
-                        Task { try? await repository.recordPlay(item: item) }
-                        path.append(.player(item: item, queue: queue))
-                    } onViewAlbum: { collectionId in
-                        path.append(.album(collectionId: collectionId))
-                    }
-                } else {
-                    ProgressView()
-                }
-            }
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .player:
-                    PlayerView(viewModel: playerViewModel) { collectionId in
-                        path.append(.album(collectionId: collectionId))
-                    }
-                case .album(let collectionId):
-                    AlbumView(
-                        viewModel: AlbumViewModel(
+        NavigationStack(path: $navigator.path) {
+            SongsView(repository: navigator.repository)
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .player:
+                        PlayerView(viewModel: navigator.playerViewModel)
+                    case .album(let collectionId):
+                        AlbumView(
                             collectionId: collectionId,
-                            repository: repository
+                            repository: navigator.repository
                         )
-                    ) { item, queue in
-                        playerViewModel.load(item: item, queue: queue)
-                        Task { try? await repository.recordPlay(item: item) }
-                        path.append(.player(item: item, queue: queue))
                     }
                 }
-            }
         }
+        .environment(navigator)
         .preferredColorScheme(.dark)
-        .onAppear {
-            if songsViewModel == nil {
-                songsViewModel = SongsViewModel(repository: repository)
-            }
-        }
     }
 }

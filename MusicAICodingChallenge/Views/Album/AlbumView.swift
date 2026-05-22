@@ -1,8 +1,15 @@
 import SwiftUI
 
 struct AlbumView: View {
-    @Bindable var viewModel: AlbumViewModel
-    var onTrackTapped: (MusicItem, [MusicItem]) -> Void
+    @Environment(Navigator.self) private var navigator
+    @State private var viewModel: AlbumViewModel
+
+    init(collectionId: Int, repository: MusicRepositoryProtocol) {
+        _viewModel = State(initialValue: AlbumViewModel(
+            collectionId: collectionId,
+            repository: repository
+        ))
+    }
 
     var body: some View {
         ScrollView {
@@ -82,7 +89,7 @@ struct AlbumView: View {
                 SongRow(item: track, showMoreButton: false)
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        onTrackTapped(track, viewModel.tracks)
+                        navigator.navigateToPlayer(item: track, queue: viewModel.tracks)
                     }
                     .padding(.horizontal, DS.Spacing.xl)
             }
@@ -92,10 +99,8 @@ struct AlbumView: View {
 
 #Preview {
     NavigationStack {
-        AlbumView(
-            viewModel: AlbumViewModel(collectionId: 1, repository: PreviewRepository()),
-            onTrackTapped: { _, _ in }
-        )
+        AlbumView(collectionId: 1, repository: PreviewRepository())
     }
+    .environment(Navigator(repository: PreviewRepository()))
     .preferredColorScheme(.dark)
 }

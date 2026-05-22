@@ -1,12 +1,15 @@
 import SwiftUI
 
 struct SongsView: View {
-    @Bindable var viewModel: SongsViewModel
-    var onSongTapped: (MusicItem, [MusicItem]) -> Void
-    var onViewAlbum: (Int) -> Void
+    @Environment(Navigator.self) private var navigator
+    @State private var viewModel: SongsViewModel
 
     @State private var sheetItem: MusicItem?
     @State private var isSearchCollapsed = false
+
+    init(repository: MusicRepositoryProtocol) {
+        _viewModel = State(initialValue: SongsViewModel(repository: repository))
+    }
 
     var body: some View {
         List {
@@ -15,7 +18,7 @@ struct SongsView: View {
                     sheetItem = item
                 }
                 .onTapGesture {
-                    onSongTapped(item, viewModel.items)
+                    navigator.navigateToPlayer(item: item, queue: viewModel.items)
                 }
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
@@ -96,7 +99,7 @@ struct SongsView: View {
             MoreOptionsSheet(item: item) {
                 sheetItem = nil
                 if let collectionId = item.collectionId {
-                    onViewAlbum(collectionId)
+                    navigator.navigateToAlbum(collectionId: collectionId)
                 }
             }
         }
@@ -105,11 +108,8 @@ struct SongsView: View {
 
 #Preview {
     NavigationStack {
-        SongsView(
-            viewModel: SongsViewModel(repository: PreviewRepository()),
-            onSongTapped: { _, _ in },
-            onViewAlbum: { _ in }
-        )
+        SongsView(repository: PreviewRepository())
     }
+    .environment(Navigator(repository: PreviewRepository()))
     .preferredColorScheme(.dark)
 }
